@@ -134,7 +134,10 @@ local function declarePlugins(use)
 
     use {
         "sindrets/diffview.nvim",
-        requires = "nvim-lua/plenary.nvim",
+        requires = {
+            "nvim-lua/plenary.nvim",
+            "nvim-web-devicons",
+        },
     }
 
     use {
