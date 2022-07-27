@@ -133,6 +133,11 @@ local function declarePlugins(use)
     }
 
     use {
+        "sindrets/diffview.nvim",
+        requires = "nvim-lua/plenary.nvim",
+    }
+
+    use {
         "Shatur/neovim-ayu",
         config = function()
             require("config.ayu").setup()
