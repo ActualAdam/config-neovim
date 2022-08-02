@@ -24,6 +24,8 @@ vim.opt.cmdheight = 1
 vim.opt.pumheight = 10            -- popup menu height (smaller than default)
 vim.opt.laststatus = 2            -- always show the status line
 vim.opt.showmode = false
+vim.opt.ignorecase = true
+
 
 vim.opt.backup = false                -- backups don't spark joy
 vim.opt.writebackup = false

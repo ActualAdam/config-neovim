@@ -109,7 +109,7 @@ local function declarePlugins(use)
         event = "InsertEnter",
         opt = true,
         config = function()
-            require("config.cmp").setup()
+            require("config.cmp_config").setup()
         end,
         wants = { "LuaSnip" },
         requires = {
