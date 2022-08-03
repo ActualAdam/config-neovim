@@ -133,6 +133,10 @@ local function declarePlugins(use)
     }
 
     use {
+        "mfussenegger/nvim-dap",
+    }
+
+    use {
         "sindrets/diffview.nvim",
         requires = {
             "nvim-lua/plenary.nvim",

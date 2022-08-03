@@ -1,6 +1,6 @@
 local treesitter = {}
 
-function treesitter.setup() 
+function treesitter.setup()
     require("nvim-treesitter.configs").setup {
         auto_install = true,
         highlight = {
