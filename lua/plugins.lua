@@ -11,13 +11,30 @@ local function declarePlugins(use)
     }
 
     use {
+        "ms-jpq/coq_nvim",
+        branch = "coq",
+        run = ":COQdeps",
+        config = function()
+            require("config.coq").setup()
+        end,
+        requires = {
+            {
+                "ms-jpq/coq.artifacts",
+                branch = "artifacts",
+            },
+            {
+                "ms-jpq/coq.thirdparty",
+                branch = "3p",
+                module = "coq_3p"
+            },
+        },
+    }
+
+    use {
         "neovim/nvim-lspconfig",
-        opt = true,
         event = "BufReadPre",
         wants = {
             "nvim-lsp-installer",
-            "cmp-nvim-lsp",
-            "nvim-cmp",
             "lsp_signature.nvim",
         },
         config = function()
@@ -27,6 +44,9 @@ local function declarePlugins(use)
             "williamboman/nvim-lsp-installer",
             "ray-x/lsp_signature.nvim",
         },
+        after = {
+            "coq_nvim"
+        }
     }
 
     use {
@@ -41,6 +61,23 @@ local function declarePlugins(use)
         config = function()
             require("config.treesitter").setup()
         end,
+        requires = {
+            {
+                "windwp/nvim-autopairs",
+                run = "make",
+                config = function()
+                    require("nvim-autopairs").setup()
+                end,
+            },
+            {
+                "windwp/nvim-ts-autotag",
+                config = function()
+                    require("nvim-ts-autotag").setup {
+                        enable = true
+                    }
+                end,
+            }
+        }
     }
 
     use {
@@ -90,47 +127,6 @@ local function declarePlugins(use)
         end,
     }
 
-    use {
-        "windwp/nvim-autopairs",
-        wants = {
-            "nvim-treesitter",
-        },
-        module = {
-            "nvim-autopairs.completion.cmp",
-            "nvim-autopairs"
-        },
-        config = function()
-            require("config.autopairs").setup()
-        end,
-    }
-
-    use {
-        "hrsh7th/nvim-cmp",
-        event = "InsertEnter",
-        opt = true,
-        config = function()
-            require("config.cmp_config").setup()
-        end,
-        wants = { "LuaSnip" },
-        requires = {
-            "hrsh7th/cmp-buffer",
-            "hrsh7th/cmp-path",
-            "hrsh7th/cmp-nvim-lua",
-            "ray-x/cmp-treesitter",
-            "hrsh7th/cmp-cmdline",
-            "saadparwaiz1/cmp_luasnip",
-            "hrsh7th/cmp-nvim-lsp",
-            {
-                "L3MON4D3/LuaSnip",
-                wants = "friendly-snippets",
-                config = function()
-                    require("config.luasnip").setup()
-                end,
-            },
-            "rafamadriz/friendly-snippets",
-        },
-        disable = false,
-    }
 
     use {
         "mfussenegger/nvim-dap",
@@ -150,6 +146,7 @@ local function declarePlugins(use)
             require("config.ayu").setup()
         end
     }
+
 end
 
 function plugins.setup()
