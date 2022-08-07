@@ -29,8 +29,20 @@ function whichkey.setup()
             o = { "<cmd>FzfLua oldfiles<cr>", "Old files" },
             g = { "<cmd>FzfLua live_grep<cr>", "Live grep" },
             c = { "<cmd>FzfLua commands<cr>", "Commands" },
-            e = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
         },
+        t = {
+            name = "Tree",
+            t = { "<cmd>NvimTreeToggle<cr>", "Tree Toggle" },
+            f = { "<cmd>NvimTreeFindFile", "Find Current File" },
+            F = { "<cmd>NvimTreeFindFileToggle", "Follow Current File" },
+        },
+        p = {
+            name = "Plugin",
+            s = { "<cmd>PackerStatus<cr>", "Status" },
+            i = { "<cmd>PackerInstall<cr>", "Install" },
+            x = { "<cmd>PackerSync<cr>", "Sync" },
+            u = { "<cmd>PackerUpdate", "Update" },
+        }
     }
 
     which_key.setup(conf)

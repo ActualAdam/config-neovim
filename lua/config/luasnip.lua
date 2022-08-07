@@ -1,6 +1,6 @@
 local luasnip = {}
 
 function luasnip.setup()
-end 
+end
 
 return luasnip

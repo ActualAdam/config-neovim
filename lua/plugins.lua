@@ -127,7 +127,6 @@ local function declarePlugins(use)
         end,
     }
 
-
     use {
         "mfussenegger/nvim-dap",
     }
