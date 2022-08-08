@@ -33,15 +33,15 @@ function whichkey.setup()
         t = {
             name = "Tree",
             t = { "<cmd>NvimTreeToggle<cr>", "Tree Toggle" },
-            f = { "<cmd>NvimTreeFindFile", "Find Current File" },
-            F = { "<cmd>NvimTreeFindFileToggle", "Follow Current File" },
+            f = { "<cmd>NvimTreeFindFile<cr>", "Find Current File" },
+            F = { "<cmd>NvimTreeFindFileToggle<cr>", "Follow Current File" },
         },
         p = {
             name = "Plugin",
             s = { "<cmd>PackerStatus<cr>", "Status" },
             i = { "<cmd>PackerInstall<cr>", "Install" },
             x = { "<cmd>PackerSync<cr>", "Sync" },
-            u = { "<cmd>PackerUpdate", "Update" },
+            u = { "<cmd>PackerUpdate<cr>", "Update" },
         }
     }
 
