@@ -1,6 +1,6 @@
 local plugins = {}
 
-local function declarePlugins(use)
+function plugins.declarePlugins(use)
     use({"wbthomason/packer.nvim"})
 
     use {
@@ -146,13 +146,13 @@ local function declarePlugins(use)
         end
     }
 
-end
+    use {
+        "metakirby5/codi.vim",
+        config = function()
+            vim.g["codi#virtual_test_prefix"] = "> "
+        end,
+    }
 
-function plugins.setup()
-    vim.cmd [[packadd packer.nvim]]
-     -- still learning the language here, but I think this is passing the function literal, so packer provides whatever `use` is. 
-     -- in many examples, I saw this function declared anonymously, but I think that syntax is so ugly, I'm avoiding it. 
-    require("packer").startup(declarePlugins)
 end
 
 return plugins
