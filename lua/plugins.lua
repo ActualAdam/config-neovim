@@ -1,5 +1,7 @@
 local plugins = {}
 
+
+
 function plugins.declarePlugins(use)
     use({"wbthomason/packer.nvim"})
 
@@ -63,13 +65,6 @@ function plugins.declarePlugins(use)
         end,
         requires = {
             {
-                "windwp/nvim-autopairs",
-                run = "make",
-                config = function()
-                    require("nvim-autopairs").setup()
-                end,
-            },
-            {
                 "windwp/nvim-ts-autotag",
                 config = function()
                     require("nvim-ts-autotag").setup {
@@ -78,6 +73,27 @@ function plugins.declarePlugins(use)
                 end,
             }
         }
+    }
+
+    use {
+        "RRethy/nvim-treesitter-endwise",
+        after = "nvim-treesitter",
+        config = function()
+            require('nvim-treesitter.configs').setup {
+                endwise = {
+                    enable = true,
+                },
+            }
+        end
+    }
+
+    use {
+        "windwp/nvim-autopairs",
+        run = "make",
+        after = "nvim-treesitter",
+        config = function()
+            require("config.autopairs").setup()
+        end,
     }
 
     use {
@@ -151,6 +167,23 @@ function plugins.declarePlugins(use)
         config = function()
             vim.g["codi#virtual_test_prefix"] = "> "
         end,
+    }
+
+    use {
+        "nvim-neotest/neotest",
+        requires = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            "antoinemadec/FixCursorHold.nvim",
+            "vim-test/vim-test",
+        },
+        configure = function()
+            require("neotest").setup({
+                adapters = {
+                    require("neotest-vim-test")
+                }
+            })
+        end
     }
 
 end

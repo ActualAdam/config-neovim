@@ -5,8 +5,6 @@ function autopairs.setup()
     nvim_autopairs.setup {
         check_ts = true,
     }
-    nvim_autopairs.add_rules(require("nvim-autopairs.rules.endwise-lua"))
 end
-
 
 return autopairs
