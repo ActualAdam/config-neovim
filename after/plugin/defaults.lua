@@ -50,6 +50,11 @@ vim.api.nvim_set_keymap("", "<Space>", "<Nop>", { noremap = true, silent = true 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- trim whitespace before eol on save
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+  pattern = { "*" },
+  command = [[%s/\s\+$//e]],
+})
 
  -- syntax enable
 vim.cmd [[

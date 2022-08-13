@@ -121,7 +121,7 @@ function plugins.declarePlugins(use)
     }
 
 
-    -- if I ever remove the homebrew installed fzf 
+    -- if I ever remove the homebrew installed fzf
     -- use {
     --     'junegunn/fzf',
     --     run = './install --bin',
@@ -177,7 +177,7 @@ function plugins.declarePlugins(use)
             "antoinemadec/FixCursorHold.nvim",
             "vim-test/vim-test",
         },
-        configure = function()
+        config = function()
             require("neotest").setup({
                 adapters = {
                     require("neotest-vim-test")
@@ -185,6 +185,14 @@ function plugins.declarePlugins(use)
             })
         end
     }
+
+    use {
+        "norcalli/nvim-colorizer.lua",
+        config = function()
+            require("colorizer").setup()
+        end,
+    }
+
 
 end
 
