@@ -176,12 +176,17 @@ function plugins.declarePlugins(use)
             "nvim-treesitter/nvim-treesitter",
             "antoinemadec/FixCursorHold.nvim",
             "vim-test/vim-test",
+            "nvim-neotest/neotest-vim-test",
         },
         config = function()
             require("neotest").setup({
                 adapters = {
-                    require("neotest-vim-test")
-                }
+                    require("neotest-vim-test")({
+                        allow_file_types = {
+                            "mocha"
+                        },
+                    }),
+                },
             })
         end
     }

@@ -1,6 +1,9 @@
 local init = {}
 
 local configs_by_server = {
+    elmls = {
+        root_dir = require("lspconfig").util.find_package_json_ancestor()
+    },
     jsonls = {},
     rust_analyzer = {},
     sumneko_lua = {
@@ -27,7 +30,7 @@ local configs_by_server = {
     },
     kotlin_language_server = {},
     tsserver = {},  -- javascript and typescript
-    marksman = {},  -- mardkdown 
+    marksman = {},  -- mardkdown
     vimls = {},
     yamlls = {},
 }
