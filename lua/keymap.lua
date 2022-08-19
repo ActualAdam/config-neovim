@@ -19,6 +19,6 @@ function keymap.setup()
     -- Don"t reset visual mode selection after indent
     mapKeys("v", "<", "<gv")
     mapKeys("v", ">", ">gv")
-end 
+end
 
 return keymap

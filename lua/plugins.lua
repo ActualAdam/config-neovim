@@ -1,7 +1,5 @@
 local plugins = {}
 
-
-
 function plugins.declarePlugins(use)
     use({"wbthomason/packer.nvim"})
 
@@ -120,16 +118,19 @@ function plugins.declarePlugins(use)
         requires = { "nvim-web-devicons" },
     }
 
-
-    -- if I ever remove the homebrew installed fzf
-    -- use {
-    --     'junegunn/fzf',
-    --     run = './install --bin',
-    -- }
+    use {
+        "nvim-telescope/telescope.nvim",
+        -- tag = "0.1.0",  -- release tag
+        branch = "0.1.x",  -- release branch
+        requires = { "nvim-lua/plenary.nvim" },
+        config = require("config.telescope").setup()
+    }
 
     use {
-     "ibhagwan/fzf-lua",
-      requires = { "kyazdani42/nvim-web-devicons" },
+        "nvim-telescope/telescope-fzf-native.nvim",
+        run = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+        config = function()
+        end
     }
 
     use {

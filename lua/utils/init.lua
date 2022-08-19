@@ -10,28 +10,35 @@ _G.prequire = function(...)
   return nil
 end
 
-local M = {}
+local utils = {}
 
-function M.t(str)
+function utils.t(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
-function M.log(msg, hl, name)
+--
+-- true if we are in a git repo. otherwise false
+--
+function utils.is_git()
+    return vim.fn.system "git rev-parse --is-inside-work-tree"
+end
+
+function utils.log(msg, hl, name)
   name = name or "Neovim"
   hl = hl or "Todo"
   vim.api.nvim_echo({ { name .. ": ", hl }, { msg } }, true, {})
 end
 
-function M.warn(msg, name)
+function utils.warn(msg, name)
   vim.notify(msg, vim.log.levels.WARN, { title = name })
 end
 
-function M.error(msg, name)
+function utils.error(msg, name)
   vim.notify(msg, vim.log.levels.ERROR, { title = name })
 end
 
-function M.info(msg, name)
+function utils.info(msg, name)
   vim.notify(msg, vim.log.levels.INFO, { title = name })
 end
 
-return M
+return utils
