@@ -198,6 +198,12 @@ function plugins.declarePlugins(use)
         end,
     }
 
+    use {
+        'numToStr/Comment.nvim',
+        config = function()
+            require('Comment').setup()
+        end
+    }
 
 end
 
