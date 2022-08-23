@@ -11,6 +11,13 @@ function plugins.declarePlugins(use)
     }
 
     use {
+        "Shatur/neovim-ayu",
+        config = function()
+            require("config.ayu").setup()
+        end
+    }
+
+    use {
         "ms-jpq/coq_nvim",
         branch = "coq",
         run = ":COQdeps",
@@ -119,21 +126,6 @@ function plugins.declarePlugins(use)
     }
 
     use {
-        "nvim-telescope/telescope.nvim",
-        -- tag = "0.1.0",  -- release tag
-        branch = "0.1.x",  -- release branch
-        requires = { "nvim-lua/plenary.nvim" },
-        config = require("config.telescope").setup()
-    }
-
-    use {
-        "nvim-telescope/telescope-fzf-native.nvim",
-        run = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
-        config = function()
-        end
-    }
-
-    use {
         "kyazdani42/nvim-tree.lua",
         requires = {
             "nvim-web-devicons",
@@ -149,18 +141,30 @@ function plugins.declarePlugins(use)
     }
 
     use {
+        "nvim-telescope/telescope.nvim",
+        -- tag = "0.1.0",  -- release tag
+        branch = "0.1.x",  -- release branch
+        requires = {
+            "nvim-lua/plenary.nvim",
+            "nvim-telescope/telescope-project.nvim",
+            "nvim-telescope/telescope-file-browser.nvim",
+            {
+                "nvim-telescope/telescope-fzf-native.nvim",
+                run = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+            }
+        },
+        config = function()
+            require("config.telescope").setup()
+        end
+    }
+
+
+    use {
         "sindrets/diffview.nvim",
         requires = {
             "nvim-lua/plenary.nvim",
             "nvim-web-devicons",
         },
-    }
-
-    use {
-        "Shatur/neovim-ayu",
-        config = function()
-            require("config.ayu").setup()
-        end
     }
 
     use {
@@ -204,6 +208,16 @@ function plugins.declarePlugins(use)
         config = function()
             require('Comment').setup()
         end
+    }
+
+    use {
+        "iamcco/markdown-preview.nvim",
+        run = function()
+            vim.fn["mkdp#util#install"]()
+        end,
+        ft = "markdown",
+        cmd = { "MarkdownPreview" },
+        requires = { "zhaozg/vim-diagram", "aklt/plantuml-syntax" },
     }
 
 end

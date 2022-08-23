@@ -25,10 +25,11 @@ function whichkey.setup()
         f = {
             name = "Find",
             f = { "<cmd>lua require('config.telescope').find_files()<cr>", "Files" },
-            b = { "<cmd>FzfLua buffers<cr>", "Buffers" },
-            o = { "<cmd>FzfLua oldfiles<cr>", "Old files" },
+            b = { "<cmd>Telescope buffers<cr>", "Buffers" },
+            o = { "<cmd>Telescope oldfiles<cr>", "Old files" },
             g = { "<cmd>Telescope live_grep<cr>", "Live grep" },
-            c = { "<cmd>FzfLua commands<cr>", "Commands" },
+            c = { "<cmd>Telescope commands<cr>", "Commands" },
+            p = { "<cmd>Telescope project<cr>", "Projects" },
         },
         t = {
             name = "Tree",

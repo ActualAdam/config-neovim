@@ -1,7 +1,7 @@
 -- indentation settings
 vim.opt.sw = 4                    -- indentation 4 spaces
 vim.opt.ts = 4                    -- tab displays as 4 spaces
-vim.opt.expandtab = true              -- tab key is the same as space x 4 
+vim.opt.expandtab = true              -- tab key is the same as space x 4
 vim.opt.smarttab = true
 vim.opt.smartindent = true
 vim.opt.autoindent = true
@@ -14,7 +14,7 @@ vim.opt.showtabline = 4
 vim.opt.nu = true                      -- show line numbers
 vim.opt.rnu = true                     -- relative line numbers from current line
 
-vim.opt.wrap = false                 -- no line wrapping 
+vim.opt.wrap = false                 -- no line wrapping
 vim.opt.fileencoding = "utf-8"        -- encoding on write
 vim.opt.ruler = true                   -- cursor position
 
@@ -58,6 +58,6 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 
  -- syntax enable
 vim.cmd [[
-  au! BufWritePost $MYVIMRC source % 
+  au! BufWritePost $MYVIMRC source %
 ]]
 

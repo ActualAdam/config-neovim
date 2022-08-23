@@ -33,6 +33,8 @@ local configs_by_server = {
     marksman = {},  -- mardkdown
     vimls = {},
     yamlls = {},
+    jdtls = {},
+    lemminx = {},
 }
 
 local common_config = {

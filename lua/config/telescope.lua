@@ -1,10 +1,18 @@
 local telescope_config = {}
 
 function telescope_config.setup()
-    require("telescope").setup()
-    require("telescope").load_extension("fzf")
+    local telescope = require("telescope")
+    telescope.setup {
+        extensions = {
+            project = {
+                hidden_files = true,
+            },
+        },
+    }
+    telescope.load_extension("fzf")
+    telescope.load_extension("file_browser")
+    telescope.load_extension("project")
 end
-
 
 function telescope_config.find_files()
     local picker = require("telescope.builtin")
