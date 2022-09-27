@@ -41,15 +41,19 @@ function plugins.declarePlugins(use)
         "neovim/nvim-lspconfig",
         event = "BufReadPre",
         wants = {
-            "nvim-lsp-installer",
+            "mason.nvim",
+            "mason-lspconfig.nvim",
+            "mason-tool-installer.nvim",
             "lsp_signature.nvim",
         },
         config = function()
             require("config.lsp").setup()
         end,
         requires = {
-            "williamboman/nvim-lsp-installer",
+            "williamboman/mason.nvim",
+            "williamboman/mason-lspconfig.nvim",
             "ray-x/lsp_signature.nvim",
+            "WhoIsSethDaniel/mason-tool-installer.nvim",
         },
         after = {
             "coq_nvim"
@@ -204,9 +208,9 @@ function plugins.declarePlugins(use)
     }
 
     use {
-        'numToStr/Comment.nvim',
+        "numToStr/Comment.nvim",
         config = function()
-            require('Comment').setup()
+            require("Comment").setup()
         end
     }
 
@@ -220,6 +224,19 @@ function plugins.declarePlugins(use)
         requires = { "zhaozg/vim-diagram", "aklt/plantuml-syntax" },
     }
 
+    use {
+        "TimUntersberger/neogit",
+        requires = "nvim-lua/plenary.nvim",
+        config = require("neogit").setup(),
+    }
+
+    use {
+        "ruifm/gitlinker.nvim",
+        requires = "nvim-lua/plenary.nvim",
+        config = require("gitlinker").setup()
+    }
+
 end
+
 
 return plugins

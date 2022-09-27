@@ -43,7 +43,16 @@ function whichkey.setup()
             i = { "<cmd>PackerInstall<cr>", "Install" },
             x = { "<cmd>PackerSync<cr>", "Sync" },
             u = { "<cmd>PackerUpdate<cr>", "Update" },
-        }
+        },
+        l = {
+            name = "LSP",
+            g = {
+              name = "go to",
+            },
+            w = {
+              name = "workspace",
+            },
+        },
     }
 
     which_key.setup(conf)

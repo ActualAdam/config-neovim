@@ -1,118 +1,101 @@
-local init = {}
+local M = {}
 
-local configs_by_server = {
-    elmls = {
-        root_dir = require("lspconfig").util.find_package_json_ancestor()
-    },
-    jsonls = {},
-    rust_analyzer = {},
-    sumneko_lua = {
+local function configure_mason()
+    require("mason").setup({
+        ui = {
+            icons = {
+                package_installed = "✓",
+                package_pending = "➜",
+                package_uninstalled = "✗",
+            },
+        },
+    })
+end
+
+local function configure_mason_lspconfig()
+    require("mason-lspconfig").setup({
+        ensure_installed = {},
+        automatic_installation = true,
+        -- automatic_installation = {
+        --     exclude = {},
+        -- },
+    })
+end
+
+local function configure_global_keymaps()
+    -- Mappings.
+    -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+    local opts = { noremap=true, silent=true }
+    vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+    vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+    vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+end
+
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+    -- Mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local bufopts = { noremap=true, silent=true, buffer=bufnr }
+    vim.keymap.set('n', '<space>lgD', vim.lsp.buf.declaration, bufopts)
+    vim.keymap.set('n', '<space>lgd', vim.lsp.buf.definition, bufopts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+    vim.keymap.set('n', '<space>lgi', vim.lsp.buf.implementation, bufopts)
+    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+    vim.keymap.set('n', '<space>lwa', vim.lsp.buf.add_workspace_folder, bufopts)
+    vim.keymap.set('n', '<space>lwr', vim.lsp.buf.remove_workspace_folder, bufopts)
+    vim.keymap.set('n', '<space>lwl', function()
+        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, bufopts)
+    vim.keymap.set('n', '<space>lD', vim.lsp.buf.type_definition, bufopts)
+    vim.keymap.set('n', '<space>lr', vim.lsp.buf.rename, bufopts)
+    vim.keymap.set('n', '<space>la', vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set('n', '<space>lgr', vim.lsp.buf.references, bufopts)
+    vim.keymap.set('n', '<space>lf', vim.lsp.buf.formatting, bufopts)
+end
+
+function M.setup()
+    configure_global_keymaps()
+    configure_mason()
+    configure_mason_lspconfig()
+    local lsp_flags = {
+        -- This is the default in Nvim 0.7+
+        debounce_text_changes = 150,
+    }
+    local lspconfig = require("lspconfig")
+    lspconfig["sumneko_lua"].setup(require("coq").lsp_ensure_capabilities({
+        on_attach = on_attach,
+        flags = lsp_flags,
         settings = {
             Lua = {
-                runtime = {
-                    -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                    version = 'LuaJIT',
-                },
                 diagnostics = {
-                    -- Get the language server to recognize the `vim` global
-                    globals = {'vim'},
-                },
-                workspace = {
-                    -- Make the server aware of Neovim runtime files
-                    library = vim.api.nvim_get_runtime_file("", true),
-                },
-                -- Do not send telemetry data containing a randomized but unique identifier
-                telemetry = {
-                    enable = false,
+                    globals = {
+                        "vim"
+                    },
                 },
             },
         },
-    },
-    kotlin_language_server = {},
-    tsserver = {},  -- javascript and typescript
-    marksman = {},  -- mardkdown
-    vimls = {},
-    yamlls = {},
-    jdtls = {},
-    lemminx = {},
-}
-
-local common_config = {
-    on_attach = function(client, bufnr)
-        -- Enable completion triggered by <C-X><C-O>
-        -- See `:help omnifunc` and `:help ins-completion` for more information.
-        vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-
-        -- Use LSP as the handler for formatexpr.
-        -- See `:help formatexpr` for more information.
-        vim.api.nvim_buf_set_option(0, "formatexpr", "v:lua.vim.lsp.formatexpr()")
-
-        -- Configure key mappings
-        require("config.lsp.keymaps").setup(client, bufnr)
-    end,
-    flags = {
-        debounce_text_changes = 150,
-    },
-}
-
-
-local lsp_signature = require("lsp_signature")
-
-lsp_signature.setup {
-    bind = true,
-    handler_opts = {
-        border = "rounded",
-    },
-}
-
--- mutates the server_configs
-local function apply_to_each(server_configs, applicant)
-    for _, config in pairs(server_configs) do
-        for k, v in pairs(applicant) do
-            config[k] = v
-        end
-    end
-    return server_configs
+    }))
+    lspconfig["tsserver"].setup(require("coq").lsp_ensure_capabilities({
+        on_attach = on_attach,
+        flags = lsp_flags,
+    }))
+    -- require('lspconfig')['pyright'].setup {
+    --     on_attach = on_attach,
+    --     flags = lsp_flags,
+    -- }
+    -- require('lspconfig')['rust_analyzer'].setup {
+    --     on_attach = on_attach,
+    --     flags = lsp_flags,
+    --     -- Server-specific settings...
+    --     settings = {
+    --         ["rust-analyzer"] = {}
+    --     }
+    -- }
 end
 
-local enhanced_configs = apply_to_each(configs_by_server, common_config)
-
-local function apply_coq(server_configs)
-    local coq = require("coq")
-    for server, config in pairs(server_configs) do
-        server_configs[server] = coq.lsp_ensure_capabilities(config)
-    end
-    return server_configs
-end
-
-local coqd_configs = apply_coq(enhanced_configs)
-
-function init.setup()
-    --    require("config.lsp.installer").setup(servers, opts)
-    local lsp_installer_servers = require("nvim-lsp-installer.servers")
-    local utils = require("utils")
-
-    local function setup(configs)
-        for server_name, _ in pairs(configs) do
-            local server_available, server = lsp_installer_servers.get_server(server_name)
-
-            if server_available then
-                server:on_ready(function()
-                    local opts = configs[server.name] or {}
-                    -- server:setup(require("coq").lsp_ensure_capabilities(opts))
-                    server:setup(opts)
-                end)
-
-                if not server:is_installed() then
-                    utils.info("Installing " .. server.name)
-                    server:install()
-                end
-            else
-                utils.error(server)
-            end
-        end
-    end
-    setup(coqd_configs)
-end
-
-return init
+return M
