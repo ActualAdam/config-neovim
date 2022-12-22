@@ -84,6 +84,10 @@ function M.setup()
         on_attach = on_attach,
         flags = lsp_flags,
     }))
+    lspconfig["clojure_lsp"].setup(require("coq").lsp_ensure_capabilities({
+        on_attach = on_attach,
+        flags = lsp_flags,
+    }))
     -- require('lspconfig')['pyright'].setup {
     --     on_attach = on_attach,
     --     flags = lsp_flags,

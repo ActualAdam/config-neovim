@@ -191,8 +191,7 @@ function plugins.declarePlugins(use)
             require("neotest").setup({
                 adapters = {
                     require("neotest-vim-test")({
-                        allow_file_types = {
-                            "mocha"
+                        allow_file_types = { "mocha"
                         },
                     }),
                 },
@@ -235,6 +234,8 @@ function plugins.declarePlugins(use)
         requires = "nvim-lua/plenary.nvim",
         config = require("gitlinker").setup()
     }
+
+    use "Olical/conjure"
 
 end
 
