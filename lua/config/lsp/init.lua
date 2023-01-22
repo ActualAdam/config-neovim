@@ -1,105 +1,78 @@
-local M = {}
+local lsp = {}
 
-local function configure_mason()
-    require("mason").setup({
-        ui = {
-            icons = {
-                package_installed = "✓",
-                package_pending = "➜",
-                package_uninstalled = "✗",
-            },
-        },
-    })
-end
-
-local function configure_mason_lspconfig()
-    require("mason-lspconfig").setup({
-        ensure_installed = {},
-        automatic_installation = true,
-        -- automatic_installation = {
-        --     exclude = {},
-        -- },
-    })
-end
-
-local function configure_global_keymaps()
-    -- Mappings.
-    -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-    local opts = { noremap=true, silent=true }
-    vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-    vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-    vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
-end
-
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
-    -- Enable completion triggered by <c-x><c-o>
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-    -- Mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    local bufopts = { noremap=true, silent=true, buffer=bufnr }
-    vim.keymap.set('n', '<space>lgD', vim.lsp.buf.declaration, bufopts)
-    vim.keymap.set('n', '<space>lgd', vim.lsp.buf.definition, bufopts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-    vim.keymap.set('n', '<space>lgi', vim.lsp.buf.implementation, bufopts)
-    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-    vim.keymap.set('n', '<space>lwa', vim.lsp.buf.add_workspace_folder, bufopts)
-    vim.keymap.set('n', '<space>lwr', vim.lsp.buf.remove_workspace_folder, bufopts)
-    vim.keymap.set('n', '<space>lwl', function()
-        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, bufopts)
-    vim.keymap.set('n', '<space>lD', vim.lsp.buf.type_definition, bufopts)
-    vim.keymap.set('n', '<space>lr', vim.lsp.buf.rename, bufopts)
-    vim.keymap.set('n', '<space>la', vim.lsp.buf.code_action, bufopts)
-    vim.keymap.set('n', '<space>lgr', vim.lsp.buf.references, bufopts)
-    vim.keymap.set('n', '<space>lf', vim.lsp.buf.formatting, bufopts)
-end
-
-function M.setup()
-    configure_global_keymaps()
-    configure_mason()
-    configure_mason_lspconfig()
-    local lsp_flags = {
-        -- This is the default in Nvim 0.7+
-        debounce_text_changes = 150,
-    }
-    local lspconfig = require("lspconfig")
-    lspconfig["sumneko_lua"].setup(require("coq").lsp_ensure_capabilities({
-        on_attach = on_attach,
-        flags = lsp_flags,
-        settings = {
-            Lua = {
-                diagnostics = {
-                    globals = {
-                        "vim"
-                    },
-                },
-            },
-        },
-    }))
-    lspconfig["tsserver"].setup(require("coq").lsp_ensure_capabilities({
-        on_attach = on_attach,
-        flags = lsp_flags,
-    }))
-    lspconfig["clojure_lsp"].setup(require("coq").lsp_ensure_capabilities({
-        on_attach = on_attach,
-        flags = lsp_flags,
-    }))
-    -- require('lspconfig')['pyright'].setup {
-    --     on_attach = on_attach,
-    --     flags = lsp_flags,
+-- Language servers that implement LSP will be automatically installed if they are named here.
+-- You have to use these nvim_lsp names though.
+-- https://github.com/williamboman/mason-lspconfig.nvim#available-lsp-servers
+lsp.servers = {
+  -- clangd = {},
+  -- gopls = {},
+  -- pyright = {},
+  rust_analyzer = {},
+  taplo = {}, -- toml
+  tsserver = {}, -- typescript
+  jdtls = {}, -- java
+  kotlin_language_server = {},
+  clojure_lsp = {},
+  sumneko_lua = {
+    Lua = {
+      workspace = { checkThirdParty = false },
+      telemetry = { enable = false },
+    },
+  },
+  tailwindcss = {},
+  svelte = {},
+  lemminx = {
+    -- validation = {
+    --   noGrammar= "hint",
+    --   enabled = true,
+    --   schema = true,
     -- }
-    -- require('lspconfig')['rust_analyzer'].setup {
-    --     on_attach = on_attach,
-    --     flags = lsp_flags,
-    --     -- Server-specific settings...
-    --     settings = {
-    --         ["rust-analyzer"] = {}
-    --     }
-    -- }
+  }, -- xml
+}
+
+-- LSP settings.
+--  This function gets run when an LSP connects to a particular buffer.
+lsp.on_attach = function(_, bufnr)
+  -- NOTE: Remember that lua is a real programming language, and as such it is possible
+  -- to define small helper and utility functions so you don't have to repeat yourself
+  -- many times.
+  --
+  -- In this case, we create a function that lets us more easily define mappings specific
+  -- for LSP related items. It sets the mode, buffer and description for us each time.
+  local nmap = function(keys, func, desc)
+    if desc then
+      desc = 'LSP: ' .. desc
+    end
+
+    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+  end
+
+  nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+
+  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+  nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+  nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+
+  -- See `:help K` for why this keymap
+  nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+
+  -- Lesser used LSP functionality
+  nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+  nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
+  nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+  nmap('<leader>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, '[W]orkspace [L]ist Folders')
+
+  -- Create a command `:Format` local to the LSP buffer
+  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+    vim.lsp.buf.format()
+  end, { desc = 'Format current buffer with LSP' })
 end
 
-return M
+return lsp

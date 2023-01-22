@@ -29,6 +29,10 @@ function utils.log(msg, hl, name)
   vim.api.nvim_echo({ { name .. ": ", hl }, { msg } }, true, {})
 end
 
+function utils.error_plugin_not_installed(plugin_name)
+  utils.error("Plugin not installed, skipping config: " .. plugin_name, "Config")
+end
+
 function utils.warn(msg, name)
   vim.notify(msg, vim.log.levels.WARN, { title = name })
 end
