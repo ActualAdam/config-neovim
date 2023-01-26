@@ -5,9 +5,10 @@ return {
     build = function()
       pcall(require("nvim-treesitter.install").update { with_sync = true })
     end,
-    configure = function()
+    config = function()
       -- [[ Configure Treesitter ]]
       -- See `:help nvim-treesitter`
+      vim.notify("hi from inside treesitter config")
       require('nvim-treesitter.configs').setup {
         -- Add languages to be installed here that you want installed for treesitter
         ensure_installed = {
@@ -18,6 +19,10 @@ return {
           'go',
           'python',
           'typescript',
+          'javascript',
+          'jq',
+          'graphql',
+          'json',
           'lua',
           'help',
           'java',
@@ -26,11 +31,13 @@ return {
           'sql',
           'svelte',
           'markdown',
-          'json',
+          'markdown_inline',
+          'mermaid',
           'hcl',
           'dockerfile',
           'yaml',
           'make',
+          'bash',
         },
 
         highlight = { enable = true },
@@ -94,6 +101,6 @@ return {
 
   { -- Additional text objects via treesitter
     "nvim-treesitter/nvim-treesitter-textobjects",
-    dependencies = "nvim-treesitter",
+    dependencies = "nvim-treesitter/nvim-treesitter",
   },
 }
