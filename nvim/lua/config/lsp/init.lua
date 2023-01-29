@@ -5,14 +5,17 @@ local lsp = {}
 -- https://github.com/williamboman/mason-lspconfig.nvim#available-lsp-servers
 lsp.servers = {
   -- clangd = {},
-  -- gopls = {},
-  -- pyright = {},
+  pyright = {}, -- python
+  ansiblels = {},
   rust_analyzer = {},
   taplo = {}, -- toml
   tsserver = {}, -- typescript
   jdtls = {}, -- java
   kotlin_language_server = {},
   clojure_lsp = {},
+  gopls = {},
+  golangci_lint_ls = {},
+  marksman = {}, -- markdown
   sumneko_lua = {
     Lua = {
       workspace = { checkThirdParty = false },
@@ -28,6 +31,10 @@ lsp.servers = {
     --   schema = true,
     -- }
   }, -- xml
+  sqlls = {},
+  terraformls = {},
+  tflint = {},
+  yamlls = {},
 }
 
 -- LSP settings.
