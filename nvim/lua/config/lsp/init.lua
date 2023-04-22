@@ -10,6 +10,7 @@ lsp.servers = {
   rust_analyzer = {},
   taplo = {}, -- toml
   tsserver = {}, -- typescript
+  jsonls = {},
   jdtls = {}, -- java
   kotlin_language_server = {},
   clojure_lsp = {},
@@ -22,7 +23,7 @@ lsp.servers = {
       telemetry = { enable = false },
     },
   },
-  tailwindcss = {},
+  -- tailwindcss = {},
   svelte = {},
   lemminx = {
     -- validation = {

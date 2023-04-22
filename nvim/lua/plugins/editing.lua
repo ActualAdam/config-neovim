@@ -45,11 +45,62 @@ return {
     end,
   },
 
-  -- :Glow for mardkdown preview
+  -- :Glow for mardkdown preview in nvim
   {
     "ellisonleao/glow.nvim",
     config = function()
       require("glow").setup()
+    end
+  },
+
+  -- markdown preview in browser
+  {
+    "iamcco/markdown-preview.nvim",
+    build = function()
+      vim.fn["mkdp#util#install"]()
+    end,
+    config = function()
+      vim.g.mkdp_filetypes = { "markdown" }
+    end,
+    ft = { "markdown" },
+  },
+
+  -- invoke a repl. probably this should get extracted
+  {
+    "hkupty/iron.nvim",
+    config = function()
+      local iron = require("iron.core")
+      iron.setup {
+        config = {
+          repl_definition = {
+            sh = {
+              command = {"zsh"}
+            },
+            python = {
+              command = function(meta)
+                return {
+                  "python3"
+                }
+              end
+            },
+            kotlin = {
+              command = function(meta)
+                return {
+                  "kotlinc"
+                }
+              end
+            },
+            lua = {
+              command = function(meta)
+                return {
+                  "lua"
+                }
+              end
+            }
+          },
+          repl_open_cmd = require("iron.view").split.vertical.botright("40%"),
+        }
+      }
     end
   }
 }

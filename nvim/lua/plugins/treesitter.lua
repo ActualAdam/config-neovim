@@ -19,6 +19,7 @@ return {
           'python',
           'typescript',
           'javascript',
+          'html',
           'jq',
           'graphql',
           'json',
