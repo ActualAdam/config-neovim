@@ -65,6 +65,8 @@ function keymap.setup()
     require("neotest").output.open({ enter = true })
   end, { desc = "[t][o] open test report"})
 
+  vim.api.nvim_set_keymap("n", "<leader>lc", ":LilyCmp<CR>", { noremap = true, desc = "[L]ilypond [C]ompile"})
+
 end
 
 return keymap

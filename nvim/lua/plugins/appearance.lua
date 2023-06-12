@@ -1,15 +1,13 @@
 return {
   -- 'navarasu/onedark.nvim', -- Theme inspired by Atom
 
-  {
-    "Shatur/neovim-ayu",
+  { "catppuccin/nvim",
+    name = "catppuccin",
     config = function()
-      local ayu = require("ayu")
-      ayu.setup {
-        mirage = false,
-        overrides = {}
-      }
-      ayu.colorscheme()
+      require("catppuccin").setup({
+        flavour = "latte"
+        -- flavour = "macchiato"
+      })
     end
   },
 

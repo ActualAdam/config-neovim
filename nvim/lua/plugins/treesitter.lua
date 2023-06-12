@@ -24,7 +24,7 @@ return {
           'graphql',
           'json',
           'lua',
-          'help',
+          'vimdoc',
           'java',
           'kotlin',
           'clojure',

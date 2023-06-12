@@ -18,6 +18,7 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+
 require("lazy").setup("plugins")
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
@@ -30,6 +31,8 @@ require("settings.keymap").setup()
 
 -- Turn on lsp status information
 require('fidget').setup()
+
+require('config.dap').setup()
 
 -- nvim-cmp setup
 local cmp = require 'cmp'
@@ -54,6 +57,24 @@ cmp.setup {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
   },
+}
+
+vim.api.nvim_cmd({
+  cmd = 'colorscheme',
+  args = {'catppuccin'}
+}, {})
+
+local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+parser_config.lilypond = {
+  install_info = {
+    url = "https://github.com/tristanperalta/tree-sitter-lilypond", -- local path or git repo
+    files = {"src/parser.c"}, -- note that some parsers also require src/scanner.c or src/scanner.cc
+    -- optional entries:
+    branch = "main", -- default branch in case of git repo if different from master
+    generate_requires_npm = true, -- if stand-alone parser without npm dependencies
+    requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
+  },
+  filetype = "ly", -- if filetype does not match the parser name
 }
 
 -- The line beneath this is called `modeline`. See `:help modeline`

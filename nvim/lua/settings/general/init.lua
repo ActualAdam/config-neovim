@@ -31,6 +31,8 @@ function general.setup()
 	vim.o.ts = 4
 	vim.o.sw = 4
 	vim.o.softtabstop = 4
+	vim.o.textwidth = 120
+	vim.opt.formatoptions:remove {"t"}
 
 	-- [[ Highlight on yank ]]
 	-- See `:help vim.highlight.on_yank()`

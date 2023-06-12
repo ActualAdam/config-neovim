@@ -17,7 +17,7 @@ lsp.servers = {
   gopls = {},
   golangci_lint_ls = {},
   marksman = {}, -- markdown
-  sumneko_lua = {
+  lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },

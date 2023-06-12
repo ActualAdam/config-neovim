@@ -20,6 +20,16 @@ return {
     -- Lazy load firenvim
     -- Explanation: https://github.com/folke/lazy.nvim/discussions/463#discussioncomment-4819297
     cond = not not vim.g.started_by_firenvim
+  },
+  {
+    'martineausimon/nvim-lilypond-suite',
+    dependencies = 'MunifTanjim/nui.nvim',
+    config = function()
+      require('nvls').setup({
+        lilypond = {
+          compile = "<leader>lc"
+        }
+      })
+    end
   }
-
 }
