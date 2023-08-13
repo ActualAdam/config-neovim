@@ -7,7 +7,7 @@ return {
 
   -- permalinks for popular git service providers
   -- <leader>gy to generate permalinks for current line or visual selection
-  -- <leader>gY for a link to the repo 
+  -- <leader>gY for a link to the repo
   {
     "ruifm/gitlinker.nvim",
     dependencies = "nvim-lua/plenary.nvim",
@@ -29,5 +29,11 @@ return {
         },
       }
     end,
+  },
+  {
+    "sindrets/diffview.nvim",
+    config = function()
+      require("diffview").setup()
+    end
   },
 }

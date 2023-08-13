@@ -102,5 +102,13 @@ return {
         }
       }
     end
+  },
+
+  {
+    "RaafatTurki/hex.nvim",
+    confing = function()
+      require("hex").setup()
+    end
   }
+
 }
