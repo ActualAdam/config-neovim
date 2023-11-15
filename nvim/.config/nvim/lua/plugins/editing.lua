@@ -106,9 +106,13 @@ return {
 
   {
     "RaafatTurki/hex.nvim",
-    confing = function()
+    config = function()
       require("hex").setup()
     end
+  },
+
+  {
+    "mechatroner/rainbow_csv"
   }
 
 }
