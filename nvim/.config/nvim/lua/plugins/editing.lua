@@ -3,12 +3,20 @@ return {
   -- See `:help indent_blankline.txt`
   {
     "lukas-reineke/indent-blankline.nvim",
+    dependencies = "nvim-treesitter",
+    main = "ibl",
     config = function()
-      require("indent_blankline").setup {
-        char = "┊",
-        show_trailing_blankline_indent = false,
-      }
-    end
+      require("ibl").setup()
+    end,
+  },
+
+  -- align commands
+  {
+    'echasnovski/mini.align',
+    version = '*',
+    config = function()
+      require('mini.align').setup()
+    end,
   },
 
   -- whitespace removal on save

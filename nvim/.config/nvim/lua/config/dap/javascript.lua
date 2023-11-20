@@ -58,5 +58,3 @@ function dapjs.setup()
     }
   end
 end
-
-return dapjs

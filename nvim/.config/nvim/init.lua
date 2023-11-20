@@ -19,6 +19,10 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 
+-- disable netrw. we'll use telescope and nvim tree
+vim.g.loaded_netrw       = 1
+vim.g.loaded_netrwPlugin = 1
+
 require("lazy").setup("plugins")
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
@@ -54,8 +58,9 @@ cmp.setup {
     },
   },
   sources = {
-    { name = 'nvim_lsp' },
+    -- { name = 'nvim_lsp' },
     { name = 'luasnip' },
+    { name = 'cmp_tabnine' },
   },
 }
 

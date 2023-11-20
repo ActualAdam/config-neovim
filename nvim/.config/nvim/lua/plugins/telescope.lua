@@ -3,10 +3,13 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     branch = "0.1.x",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
     config = function()
       -- [[ Configure Telescope ]]
       -- See `:help telescope` and `:help telescope.setup()`
+      local themes = require("telescope.themes")
       require('telescope').setup {
         defaults = {
           file_ignore_patterns = {
@@ -24,7 +27,20 @@ return {
           find_files = {
             find_command = { "fd", "--type", "f" },
             hidden = true,
-          }
+          },
+          live_grep = {
+            additional_args = function()
+              return {
+                "--hidden",
+              }
+            end
+          },
+          lsp_references = {
+            theme = "cursor",
+          },
+          lsp_definitions = {
+            theme = "cursor",
+          },
         },
         extensions = {
           file_browser = {

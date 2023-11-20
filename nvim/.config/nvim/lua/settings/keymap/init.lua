@@ -52,6 +52,7 @@ function keymap.setup()
   vim.api.nvim_set_keymap("n", "<leader>fb", ":Telescope file_browser<CR>", { noremap = true })
   vim.api.nvim_set_keymap("n", "<leader>fp", ":Telescope project<CR>", { noremap = true, silent = true })
 
+  vim.keymap.set("n", "<leader>e", ":NvimTreeFocus<CR>")
 
   vim.keymap.set("n", "<leader>tf", function()
     require("neotest").run.run(vim.fn.expand('%'))
@@ -66,6 +67,7 @@ function keymap.setup()
   end, { desc = "[t][o] open test report"})
 
   vim.api.nvim_set_keymap("n", "<leader>lc", ":LilyCmp<CR>", { noremap = true, desc = "[L]ilypond [C]ompile"})
+
 
 end
 
