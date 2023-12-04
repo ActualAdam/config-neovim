@@ -5,6 +5,14 @@ function keymap.setup()
   -- See `:help vim.keymap.set()`
   vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
+  local navigation_opts = { silent = true }
+
+  -- terminal mode bindings to match nvaigation plugin
+  vim.keymap.set('t', '<C-h>', '<C-\\><C-N><C-w>h', navigation_opts)
+  vim.keymap.set('t', '<C-j>', '<C-\\><C-N><C-w>j', navigation_opts)
+  vim.keymap.set('t', '<C-k>', '<C-\\><C-N><C-w>k', navigation_opts)
+  vim.keymap.set('t', '<C-l>', '<C-\\><C-N><C-w>l', navigation_opts)
+
   -- Remap for dealing with word wrap
   vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
   vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -39,20 +47,12 @@ function keymap.setup()
   vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
   vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
-  local term_opts = {
-    silent = true
-  }
 
-  -- navigate to other windows while in terminal mode
-  vim.keymap.set('t', '<C-h>', '<C-\\><C-N><C-w>h', term_opts)
-  vim.keymap.set('t', '<C-j>', '<C-\\><C-N><C-w>j', term_opts)
-  vim.keymap.set('t', '<C-k>', '<C-\\><C-N><C-w>k', term_opts)
-  vim.keymap.set('t', '<C-l>', '<C-\\><C-N><C-w>l', term_opts)
 
   vim.api.nvim_set_keymap("n", "<leader>fb", ":Telescope file_browser<CR>", { noremap = true })
   vim.api.nvim_set_keymap("n", "<leader>fp", ":Telescope project<CR>", { noremap = true, silent = true })
 
-  vim.keymap.set("n", "<leader>e", ":NvimTreeFocus<CR>")
+  vim.keymap.set("n", "<leader>e", ":NvimTreeFindFile<CR>")
 
   vim.keymap.set("n", "<leader>tf", function()
     require("neotest").run.run(vim.fn.expand('%'))

@@ -21,7 +21,44 @@ return {
     config = function()
       require("catppuccin").setup({
         -- flavour = "latte"
-        flavour = "macchiato"
+        flavour = "macchiato",
+        background = {
+          light = "latte",
+          dark = "mocha",
+        },
+        transparent_background = true,
+        integrations = {
+          cmp = true,
+          gitsigns = true,
+          nvimtree = true,
+          treesitter = true,
+          fidget = true,
+          mini = {
+            enabled = true,
+            indentscope_color = "",
+          },
+          markdown = true,
+          mason = true,
+          native_lsp = {
+            enabled = true,
+            virtual_text = {
+              errors = { "italic" },
+              hints = { "italic" },
+              warnings = { "italic" },
+              information = { "italic" },
+            },
+            underlines = {
+              errors = { "underline" },
+              hints = { "underline" },
+              warnings = { "underline" },
+              information = { "underline" },
+            },
+            inlay_hints = {
+              background = true,
+            },
+          }
+          -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+        },
       })
     end
   },
@@ -71,5 +108,15 @@ return {
         }
       }
     end,
-  }
+  },
+
+  {
+    'stevearc/dressing.nvim',
+    opts = {},
+    config = function()
+      local dressing = require("dressing")
+      dressing.setup {}
+    end
+  },
+
 }

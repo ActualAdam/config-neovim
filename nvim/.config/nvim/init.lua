@@ -34,13 +34,20 @@ require("settings.keymap").setup()
 
 
 -- Turn on lsp status information
-require('fidget').setup()
+require('fidget').setup({
+  notification = {
+    window = {
+      winblend = 0, -- background window opacity
+    },
+  }
+})
 
 require('config.dap').setup()
 
 -- nvim-cmp setup
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 
 cmp.setup {
   snippet = {
@@ -48,21 +55,53 @@ cmp.setup {
       luasnip.lsp_expand(args.body)
     end,
   },
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
   mapping = cmp.mapping.preset.insert {
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
-    ['<CR>'] = cmp.mapping.confirm {
+    ['<C-y>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
   },
   sources = {
-    -- { name = 'nvim_lsp' },
-    { name = 'luasnip' },
+    { name = 'nvim_lsp_signature_help' },
+    { name = 'path' },
+    { name = 'nvim_lsp' },
     { name = 'cmp_tabnine' },
+    {
+      name = 'treesitter',
+      max_item_count = 5,
+    },
+
+    { name = 'luasnip' },
+    {
+      name = 'buffer',
+      option = {
+        get_bufnrs = function() return { vim.api.nvim_get_current_buf() } end
+      }
+    },
   },
 }
+
+cmp.setup.cmdline('/', {
+  sources = cmp.config.sources({
+    {
+      { name = 'nvim_lsp_document_symbol'}
+    }, {
+      { name = 'buffer' }
+    }
+  })
+})
+
+cmp.event:on(
+  'confirm_done',
+  cmp_autopairs.on_confirm_done()
+)
 
 vim.api.nvim_cmd({
   cmd = 'colorscheme',
