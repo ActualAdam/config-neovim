@@ -4,7 +4,7 @@ local lsp = {}
 -- You have to use these nvim_lsp names though.
 -- https://github.com/williamboman/mason-lspconfig.nvim#available-lsp-servers
 lsp.servers = {
-  -- clangd = {},
+  clangd = {},
   pyright = {}, -- python
   ansiblels = {},
   rust_analyzer = {},
@@ -17,6 +17,7 @@ lsp.servers = {
   gopls = {},
   golangci_lint_ls = {},
   marksman = {}, -- markdown
+  nim_langserver = {},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },

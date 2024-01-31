@@ -17,6 +17,8 @@ vim.opt.rtp:prepend(lazypath)
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
+vim.g["conjure#mapping#prefix"] = ",c"
+
 
 
 -- disable netrw. we'll use telescope and nvim tree
