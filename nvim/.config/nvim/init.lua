@@ -74,7 +74,6 @@ cmp.setup {
     { name = 'nvim_lsp_signature_help' },
     { name = 'path' },
     { name = 'nvim_lsp' },
-    { name = 'cmp_tabnine' },
     {
       name = 'treesitter',
       max_item_count = 5,
