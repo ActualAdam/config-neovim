@@ -6,7 +6,8 @@ return {
       "nvim-treesitter/nvim-treesitter",
       "antoinemadec/FixCursorHold.nvim",
       "nvim-neotest/neotest-plenary",
-      "rouge8/neotest-rust"
+      "rouge8/neotest-rust",
+      "nvim-neotest/nvim-nio",
     },
     config = function()
       require("neotest").setup {

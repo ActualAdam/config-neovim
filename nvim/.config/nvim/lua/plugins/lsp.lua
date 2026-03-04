@@ -39,15 +39,15 @@ return {
         ensure_installed = vim.tbl_keys(servers),
       }
 
-      mason_lspconfig.setup_handlers {
-        function(server_name)
-          require('lspconfig')[server_name].setup {
-            capabilities = capabilities,
-            on_attach = my_lsp_config.on_attach,
-            settings = servers[server_name],
-          }
-        end,
-      }
+      -- Configure each server using vim.lsp.config (nvim 0.11+)
+      for server_name, server_settings in pairs(servers) do
+        vim.lsp.config(server_name, {
+          capabilities = capabilities,
+          on_attach = my_lsp_config.on_attach,
+          settings = server_settings,
+        })
+      end
+      vim.lsp.enable(vim.tbl_keys(servers))
 
     end
   },
