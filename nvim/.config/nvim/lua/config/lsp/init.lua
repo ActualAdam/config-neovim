@@ -9,12 +9,12 @@ lsp.servers = {
   ansiblels = {},
   rust_analyzer = {},
   taplo = {}, -- toml
-  tsserver = {}, -- typescript
+  ts_ls = {}, -- typescript
   jsonls = {},
   jdtls = {}, -- java
   kotlin_language_server = {},
   clojure_lsp = {},
-  gleam = {},
+  -- gleam LSP is built into the gleam binary; not available via Mason
   gopls = {},
   golangci_lint_ls = {},
   marksman = {}, -- markdown
