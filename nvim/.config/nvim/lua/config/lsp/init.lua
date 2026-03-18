@@ -12,7 +12,7 @@ lsp.servers = {
   ts_ls = {}, -- typescript
   jsonls = {},
   jdtls = {}, -- java
-  kotlin_language_server = {},
+  kotlin_lsp = {},
   clojure_lsp = {},
   -- gleam LSP is built into the gleam binary; not available via Mason
   gopls = {},
