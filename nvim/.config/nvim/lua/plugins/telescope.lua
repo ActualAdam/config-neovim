@@ -12,6 +12,7 @@ return {
       local themes = require("telescope.themes")
       require('telescope').setup {
         defaults = {
+          path_display = { "shorten" },
           file_ignore_patterns = {
             ".git/",
             "target/",
