@@ -46,6 +46,8 @@ return {
         extensions = {
           file_browser = {
             hidden = true,
+            path = "%:p:h",
+            select_buffer = true,
           },
           project = {
             hidden_files = true,

@@ -115,7 +115,26 @@ return {
     opts = {},
     config = function()
       local dressing = require("dressing")
-      dressing.setup {}
+      dressing.setup {
+        input = {
+          get_config = function(opts)
+            if vim.bo.filetype == "TelescopePrompt" then
+              -- ensures the focus returns to the caller window after the prompt closes
+              local prompt_win = vim.api.nvim_get_current_win()
+              vim.api.nvim_create_autocmd("WinClosed", {
+                once = true,
+                callback = function()
+                  vim.schedule(function()
+                    if vim.api.nvim_win_is_valid(prompt_win) then
+                      vim.api.nvim_set_current_win(prompt_win)
+                    end
+                  end)
+                end,
+              })
+            end
+          end,
+        },
+      }
     end
   },
 
