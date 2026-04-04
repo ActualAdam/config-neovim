@@ -148,6 +148,29 @@ return {
     "mechatroner/rainbow_csv"
   },
   {
+    'piersolenski/import.nvim',
+    dependencies = 'nvim-telescope/telescope.nvim',
+    opts = {
+      picker = "telescope",
+      custom_languages = {
+        {
+          extensions = { "kotlin" },
+          filetypes = { "kotlin", "java" },
+          regex = [[^import\s+(.*)]],
+          insert_at_line = 3,
+        },
+      },
+    },
+    keys = {
+      {
+        "<leader>i",
+        function() require("import").pick() end,
+        desc = "Import",
+      },
+    },
+  },
+
+  {
     'stevearc/conform.nvim',
     opts = {},
     config = function()
