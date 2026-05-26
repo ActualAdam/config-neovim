@@ -175,10 +175,62 @@ return {
     opts = {},
     config = function()
       local conform = require("conform")
+      local web_formatters = { "prettierd", "prettier", stop_after_first = true }
+
       conform.setup({
         formatters_by_ft = {
-          kotlin = { "ktfmt" }
+          css = web_formatters,
+          html = web_formatters,
+          javascript = web_formatters,
+          javascriptreact = web_formatters,
+          json = web_formatters,
+          jsonc = web_formatters,
+          kotlin = { "ktfmt" },
+          less = web_formatters,
+          markdown = web_formatters,
+          scss = web_formatters,
+          typescript = web_formatters,
+          typescriptreact = web_formatters,
+          yaml = web_formatters,
         },
+        format_on_save = {
+          timeout_ms = 5000,
+          lsp_fallback = true,
+        },
+      })
+
+      vim.api.nvim_create_autocmd("InsertLeave", {
+        group = vim.api.nvim_create_augroup("WebFormatOnInsertLeave", { clear = true }),
+        pattern = "*",
+        callback = function(event)
+          local web_filetypes = {
+            css = true,
+            html = true,
+            javascript = true,
+            javascriptreact = true,
+            json = true,
+            jsonc = true,
+            less = true,
+            scss = true,
+            typescript = true,
+            typescriptreact = true,
+          }
+
+          local bufnr = event.buf
+          if not web_filetypes[vim.bo[bufnr].filetype] then
+            return
+          end
+          if not vim.bo[bufnr].modifiable or vim.bo[bufnr].readonly or not vim.bo[bufnr].modified then
+            return
+          end
+
+          conform.format({
+            bufnr = bufnr,
+            async = true,
+            lsp_fallback = true,
+            timeout_ms = 5000,
+          })
+        end,
       })
 
       vim.keymap.set({ "n", "v" }, "<leader>mp", function()
@@ -191,5 +243,33 @@ return {
     end
   },
 
+  {
+    "uga-rosa/ccc.nvim",
+    config = function()
+      require("ccc").setup({
+        highlighter = {
+          auto_enable = true,
+          lsp = true,
+          filetypes = {
+            "css",
+            "html",
+            "javascriptreact",
+            "scss",
+            "typescriptreact",
+          },
+        },
+      })
+    end,
+  },
+
+  {
+    "barrettruth/live-server.nvim",
+    ft = { "html", "css", "javascript", "javascriptreact", "typescriptreact" },
+    keys = {
+      { "<leader>ls", "<cmd>LiveServerToggle<cr>", desc = "Toggle live server" },
+      { "<leader>lS", "<cmd>LiveServerStart<cr>", desc = "Start live server" },
+      { "<leader>lx", "<cmd>LiveServerStop<cr>", desc = "Stop live server" },
+    },
+  },
 
 }

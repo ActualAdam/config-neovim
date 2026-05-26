@@ -19,7 +19,10 @@ return {
           'python',
           'typescript',
           'javascript',
+          'tsx',
           'html',
+          'css',
+          'scss',
           'jq',
           'graphql',
           'json',
@@ -41,7 +44,18 @@ return {
         },
 
         highlight = { enable = true },
-        indent = { enable = true, disable = { 'python' } },
+        indent = {
+          enable = true,
+          disable = {
+            'python',
+            'html',
+            'css',
+            'scss',
+            'javascript',
+            'typescript',
+            'tsx',
+          },
+        },
         incremental_selection = {
           enable = true,
           keymaps = {

@@ -10,6 +10,20 @@ lsp.servers = {
   rust_analyzer = {},
   taplo = {}, -- toml
   ts_ls = {}, -- typescript
+  html = {},
+  cssls = {},
+  eslint = {},
+  emmet_language_server = {
+    filetypes = {
+      "css",
+      "html",
+      "javascriptreact",
+      "less",
+      "sass",
+      "scss",
+      "typescriptreact",
+    },
+  },
   jsonls = {},
   jdtls = {}, -- java
   kotlin_lsp = {},
